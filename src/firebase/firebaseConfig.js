@@ -7,7 +7,15 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { doc, setDoc, getFirestore, collection } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDwfzAJGPmmdUrWUg-337IbB_rmeIKoF38",
@@ -19,11 +27,11 @@ const firebaseConfig = {
   measurementId: "G-RNZG6Z11Q5",
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
-const user = auth.currentUser;
+export const user = auth.currentUser;
 const db = getFirestore(app);
 
 export const SignInWithGoogle = () => {
@@ -43,4 +51,14 @@ export const addUserInDatabase = async (user) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const getUserFromDatabase = async (uid) => {
+  let user;
+  await (
+    await getDocs(query(collection(db, "users"), where("id", "==", `${uid}`)))
+  ).forEach((doc) => {
+    user = { ...doc.data() };
+  });
+  return user;
 };
