@@ -5,6 +5,7 @@ import { getUserFromDatabase } from "../../firebase/firebaseConfig";
 import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { BsArrowClockwise } from "react-icons/bs";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
   const authCtx = useContext(AuthContext);

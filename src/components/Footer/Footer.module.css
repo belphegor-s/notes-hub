@@ -1,12 +1,15 @@
 .footer {
+  width: 100%;
+  top: 100vh;
   font-size: 1.2rem;
   position: absolute;
-  bottom: 1rem;
+  padding: 1rem 0;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: default;
+  pointer-events: none;
+  background-color: #fff;
+  box-shadow: 0 0 3px #ccc;
 }

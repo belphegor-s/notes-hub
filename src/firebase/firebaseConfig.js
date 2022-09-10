@@ -15,6 +15,7 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -61,4 +62,52 @@ export const getUserFromDatabase = async (uid) => {
     user = { ...doc.data() };
   });
   return user;
+};
+
+export const addNoteInDatabase = async (uid, data) => {
+  try {
+    return await setDoc(doc(db, "notes", uid), {
+      ...data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getNotesFromDatabase = async (uid) => {
+  let notes;
+  await (
+    await getDocs(query(collection(db, "notes"), where("uid", "==", `${uid}`)))
+  ).forEach((doc) => {
+    notes = { ...doc.data() };
+  });
+  return notes;
+};
+
+export const updateNoteInDatabase = async (uid, data) => {
+  try {
+    return await updateDoc(doc(db, "notes", uid), data);
+  } catch (err) {
+    console.log("Err: ", err);
+  }
+};
+
+export const updateSpecificNoteInDatabase = async (uid, data) => {
+  try {
+    return await updateDoc(doc(db, "notes", uid), data);
+  } catch (err) {
+    console.log("Err: ", err);
+  }
+};
+
+export const deleteNoteFromDatabase = async (uid, noteID, notes) => {
+  try {
+    const updatedNotes = notes.filter((note) => note.noteID !== noteID);
+    console.log(updatedNotes);
+    return await updateDoc(doc(db, "notes", uid), {
+      notes: updatedNotes,
+    });
+  } catch (err) {
+    console.log("Err: ", err);
+  }
 };

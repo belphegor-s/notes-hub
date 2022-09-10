@@ -7,6 +7,7 @@ import {
 } from "../../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
+// import { toast } from "react-hot-toast";
 
 const SignIn = () => {
   const authCtx = useContext(AuthContext);
@@ -22,7 +23,9 @@ const SignIn = () => {
         authCtx.login(user.accessToken);
         authCtx.setId(user.uid);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

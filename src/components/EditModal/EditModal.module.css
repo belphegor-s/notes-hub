@@ -1,43 +1,32 @@
-.main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.input {
-  all: unset;
-  width: 30%;
-  padding: 0.5rem;
+.edit-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  width: 40%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
   border: 2px solid #645caa;
+  box-shadow: 0 0 10px #535353;
   border-radius: 10px;
-  margin-top: 2rem;
-  box-shadow: 0 0 10px #ccc;
+  overflow-y: auto;
 }
 
-.input-hidden {
-  width: 30%;
+.modal-content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  padding: 2rem 1.5rem;
-  border: 2px solid #645caa;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
-}
-
-.input-hidden > input {
-  width: 100%;
-}
-
-.input-hidden > textarea {
-  width: 100%;
+  background-color: #fff;
 }
 
 .input-expanded {
   all: unset;
+  width: 80%;
   padding: 0.5rem;
   border-bottom: 2px solid #ccc;
 }
@@ -61,7 +50,8 @@
 }
 
 .bottom-options {
-  width: 100%;
+  width: 83%;
+  margin: 0 2rem;
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;

@@ -1,0 +1,46 @@
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main > div {
+  font-size: 10rem;
+  font-weight: bold;
+  font-family: "Merriweather", serif;
+  color: #a084ca;
+}
+
+.main > p {
+  font-size: 2rem;
+  color: #645caa;
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #a084ca;
+  text-align: center;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+}
+
+.link:hover {
+  border-bottom: 2px solid #a084ca;
+}
+
+@media screen and (width < 468px) {
+  .main > p {
+    font-size: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .link {
+    font-size: 1rem;
+    margin: 0 1rem;
+  }
+}
