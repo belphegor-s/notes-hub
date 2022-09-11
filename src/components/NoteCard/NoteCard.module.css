@@ -1,5 +1,6 @@
 .note-card {
-  width: 20%;
+  width: 25%;
+  height: max-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,8 +18,24 @@
 }
 
 .title {
+  width: 100%;
   font-size: 1.5rem;
   font-weight: bold;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.note {
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 }
 
 .bottom-options {
@@ -39,9 +56,15 @@
   color: #a084ca;
 }
 
-@media screen and (width< 720px) {
+@media screen and (width< 900px) {
   .note-card {
     width: 30%;
+  }
+}
+
+@media screen and (width< 720px) {
+  .note-card {
+    width: 35%;
   }
 }
 

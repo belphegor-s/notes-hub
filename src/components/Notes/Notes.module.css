@@ -1,7 +1,7 @@
 .main {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-wrap: wrap;
   margin: 2rem 2rem;
   padding-bottom: 27px;
@@ -9,7 +9,7 @@
 
 @media screen and (width< 720px) {
   .main {
-    margin: 2rem 1rem;
+    margin: 2rem 0.5rem;
   }
 }
 

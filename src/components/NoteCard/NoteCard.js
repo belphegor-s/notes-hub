@@ -24,7 +24,7 @@ const NoteCard = (props) => {
     deleteNoteFromDatabase(uid, props.note.noteID, props.notes);
     toast.error("Note Deleted");
   };
-
+  // console.log(props.note.note);
   return (
     <>
       {showModal && (
@@ -43,7 +43,7 @@ const NoteCard = (props) => {
         }}
       >
         <div className={styles.title}>{props.note.title}</div>
-        <p>{props.note.note}</p>
+        <pre className={styles.note}>{props.note.note}</pre>
         <div className={styles["bottom-options"]}>
           <abbr title="Edit Note" onClick={editNoteClickHandler}>
             <AiFillEdit className={styles.icon} />
