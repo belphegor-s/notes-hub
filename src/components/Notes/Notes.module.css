@@ -2,10 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 50vh; */
   flex-wrap: wrap;
   margin: 2rem 2rem;
-  margin-bottom: 5rem;
+  padding-bottom: 27px;
 }
 
 .loading {
@@ -20,4 +19,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@media screen and (width< 720px) {
+  .main {
+    margin: 2rem 1rem;
+  }
+}
+
+@media screen and (width< 480px) {
 }

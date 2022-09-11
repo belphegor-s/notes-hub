@@ -38,3 +38,15 @@
 .icon:hover {
   color: #a084ca;
 }
+
+@media screen and (width< 720px) {
+  .note-card {
+    width: 30%;
+  }
+}
+
+@media screen and (width< 540px) {
+  .note-card {
+    width: 80%;
+  }
+}

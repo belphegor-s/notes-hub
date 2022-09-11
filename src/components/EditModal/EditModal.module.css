@@ -104,3 +104,24 @@
 ::-ms-input-placeholder {
   text-shadow: 0 0 1px #ccc;
 }
+
+@media screen and (width< 972px) {
+  .edit-modal {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+@media screen and (width< 720px) {
+  .edit-modal {
+    width: 80%;
+    height: 30%;
+  }
+}
+
+@media screen and (width< 420px) {
+  .edit-modal {
+    width: 95%;
+    height: 40%;
+  }
+}

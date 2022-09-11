@@ -1,29 +1,45 @@
-.navbar {
-  height: 5rem;
-  width: 100%;
-  box-shadow: 0 0 3px #ccc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
+.bm-burger-button {
+  position: fixed;
+  width: 30px;
+  height: 24px;
+  right: 2rem;
+  top: 1.6rem;
+}
+
+.bm-burger-bars {
+  background: #645caa;
+}
+
+.bm-burger-bars-hover {
+  background: #a084ca;
+}
+
+.bm-cross-button {
+  height: 30px;
+  width: 30px;
+}
+
+.bm-cross {
+  background: #db1b1b;
+}
+
+.bm-menu-wrap {
+  position: fixed;
   top: 0;
-  background-color: #fff;
 }
 
-.logo {
-  color: #fecd70;
-  font-size: 2rem;
-  font-weight: bolder;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 2rem;
+.bm-menu {
+  background: #fff;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+  box-shadow: 0 0 10px #ccc;
 }
 
-.profile {
-  margin-right: 2rem;
+.bm-item-list {
+  padding: 0.8em;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
 }
 
@@ -36,8 +52,8 @@
 }
 
 .greeting {
-  margin-left: 1rem;
   font-size: 1.2rem;
+  margin-top: 1rem;
 }
 
 .logout-button {
@@ -48,7 +64,7 @@
   color: #fff;
   font-size: 1.2rem;
   cursor: pointer;
-  margin-left: 1rem;
+  margin-top: 1rem;
 }
 
 .logout-button:hover {
@@ -61,25 +77,11 @@
   animation: rotation 1s infinite linear;
 }
 
-.burger-menu {
-  display: none;
-}
-
 @keyframes rotation {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media screen and (width< 648px) {
-  .burger-menu {
-    all: unset;
-  }
-
-  .profile {
-    display: none;
   }
 }

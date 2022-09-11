@@ -114,3 +114,27 @@
 ::-ms-input-placeholder {
   text-shadow: 0 0 1px #ccc;
 }
+
+@media screen and (width< 972px) {
+  .input-hidden {
+    width: 40%;
+  }
+}
+
+@media screen and (width< 720px) {
+  .input {
+    width: 60%;
+  }
+  .input-hidden {
+    width: 60%;
+  }
+}
+
+@media screen and (width< 480px) {
+  .input {
+    width: 80%;
+  }
+  .input-hidden {
+    width: 80%;
+  }
+}

@@ -6,6 +6,7 @@ import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { BsArrowClockwise } from "react-icons/bs";
 import { toast } from "react-hot-toast";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 const Navbar = () => {
   const authCtx = useContext(AuthContext);
@@ -55,6 +56,9 @@ const Navbar = () => {
           Logout
         </button>
       </div>
+      <span className={styles["burger-menu"]}>
+        <BurgerMenu userData={userData} />
+      </span>
     </div>
   );
 };
