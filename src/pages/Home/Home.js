@@ -209,7 +209,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      {isLoading && fetchedNotes ? (
+      {isLoading ? (
         <div className={styles["loading-wrap"]}>
           <BsArrowClockwise className={styles.loading} />
         </div>
