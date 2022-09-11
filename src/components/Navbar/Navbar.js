@@ -18,12 +18,12 @@ const Navbar = () => {
   const [userData, setUserData] = useState("");
 
   const fetchUser = () => {
-    getUserFromDatabase(uid).then((user) => {
-      setUserData(user);
-    });
+    getUserFromDatabase(uid)
+      .then((user) => {
+        setUserData(user);
+      })
+      .catch((err) => toast.error(err.message));
   };
-
-  // console.log(userData);
 
   useEffect(() => {
     fetchUser();

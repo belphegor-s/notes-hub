@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Home.module.css";
@@ -14,6 +14,7 @@ import { BiFontColor } from "react-icons//bi";
 import { TwitterPicker } from "react-color";
 import NotesContext from "../../context/notes-context";
 import { BsArrowClockwise } from "react-icons/bs";
+import { toast, Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [inputHiddenState, setInputHiddenState] = useState(true);
@@ -25,13 +26,13 @@ const Home = () => {
   const [displayFontColorPicker, setDisplayFontColorPicker] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [fetchedNotes, setFetchedNotes] = useState([]);
+  const [fetchedNotes, setFetchedNotes] = useState("");
 
   const uid = localStorage.getItem("id");
 
   const notesCtx = useContext(NotesContext);
 
-  const fetchNotes = () => {
+  const fetchNotes = useCallback(() => {
     setIsLoading(true);
     getNotesFromDatabase(uid)
       .then((result) => {
@@ -40,10 +41,10 @@ const Home = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.message);
         setIsLoading(false);
       });
-  };
+  });
 
   useEffect(() => {
     fetchNotes();
@@ -51,40 +52,40 @@ const Home = () => {
 
   const saveNoteHandler = () => {
     if (fetchedNotes.length !== 0) {
+      const newNote = {
+        noteID: idGen(),
+        title: title,
+        note: note,
+        bgColor: bgColor,
+        fontColor: fontColor,
+      };
       const noteData = {
-        notes: [
-          ...fetchedNotes,
-          {
-            noteID: idGen(),
-            title: title,
-            note: note,
-            bgColor: bgColor,
-            fontColor: fontColor,
-          },
-        ],
+        notes: [...fetchedNotes, newNote],
       };
       updateNoteInDatabase(uid, noteData);
-      alert("Note Created");
+      notesCtx.notes.push(newNote);
+      // console.log("New Note", notesCtx.notes);
+      toast.success("Note Created");
     } else {
+      const newNote = {
+        noteID: idGen(),
+        title: title,
+        note: note,
+        bgColor: bgColor,
+        fontColor: fontColor,
+      };
       const noteData = {
         uid: uid,
-        notes: [
-          {
-            noteID: idGen(),
-            title: title,
-            note: note,
-            bgColor: bgColor,
-            fontColor: fontColor,
-          },
-        ],
+        notes: [newNote],
       };
       addNoteInDatabase(uid, noteData)
         .then((res) => {
           setInputHiddenState(true);
-          alert("Note Created");
+          toast.success("Note Created");
+          notesCtx.notes.push(newNote);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err.message);
         });
     }
   };
@@ -216,6 +217,7 @@ const Home = () => {
         <Notes />
       )}
       <Footer />
+      <Toaster />
     </>
   );
 };

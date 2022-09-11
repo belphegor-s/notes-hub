@@ -19,13 +19,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDwfzAJGPmmdUrWUg-337IbB_rmeIKoF38",
-  authDomain: "notes-hub-84dfb.firebaseapp.com",
-  projectId: "notes-hub-84dfb",
-  storageBucket: "notes-hub-84dfb.appspot.com",
-  messagingSenderId: "361862135321",
-  appId: "1:361862135321:web:6f02ed38393bc55ccf7488",
-  measurementId: "G-RNZG6Z11Q5",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 export const app = initializeApp(firebaseConfig);
@@ -103,7 +103,7 @@ export const updateSpecificNoteInDatabase = async (uid, data) => {
 export const deleteNoteFromDatabase = async (uid, noteID, notes) => {
   try {
     const updatedNotes = notes.filter((note) => note.noteID !== noteID);
-    console.log(updatedNotes);
+    // console.log(updatedNotes);
     return await updateDoc(doc(db, "notes", uid), {
       notes: updatedNotes,
     });

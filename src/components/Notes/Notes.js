@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import styles from "./Notes.module.css";
 import NotesContext from "../../context/notes-context";

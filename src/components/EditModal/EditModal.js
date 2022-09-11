@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./EditModal.module.css";
 import { useState } from "react";
 import { TwitterPicker } from "react-color";
 import { IoMdColorPalette } from "react-icons/io";
 import { BiFontColor } from "react-icons/bi";
 import { updateSpecificNoteInDatabase } from "../../firebase/firebaseConfig";
+import { useCallback, useEffect } from "react";
+import { getNotesFromDatabase } from "../../firebase/firebaseConfig";
+import NotesContext from "../../context/notes-context";
+import { toast } from "react-hot-toast";
 
 const EditModal = (props) => {
   const [bgColor, setBgColor] = useState("");
@@ -15,8 +19,24 @@ const EditModal = (props) => {
   const [displayFontColorPicker, setDisplayFontColorPicker] = useState(false);
 
   const uid = localStorage.getItem("id");
+  const notesCtx = useContext(NotesContext);
+  const [fetchedNotes, setFetchedNotes] = useState("");
 
-  // console.log(props.notes);
+  const fetchNotes = useCallback(() => {
+    getNotesFromDatabase(uid)
+      .then((result) => {
+        notesCtx.setNotes(result.notes);
+        setFetchedNotes(result.notes);
+        // console.log(notesCtx.notes);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  });
+
+  useEffect(() => {
+    fetchNotes();
+  }, [fetchedNotes]);
 
   const saveNoteHandler = () => {
     const filteredNotes = props.notes.filter(
@@ -38,10 +58,9 @@ const EditModal = (props) => {
 
     updateSpecificNoteInDatabase(uid, updatedData)
       .then((result) => {
-        console.log("updated");
-        // window.location.reload(false);
+        toast.success("Note Updated");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.message));
   };
 
   return (

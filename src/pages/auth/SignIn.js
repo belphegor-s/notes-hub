@@ -7,7 +7,8 @@ import {
 } from "../../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
-// import { toast } from "react-hot-toast";
+import { CgNotes } from "react-icons/cg";
+import { toast } from "react-hot-toast";
 
 const SignIn = () => {
   const authCtx = useContext(AuthContext);
@@ -16,24 +17,38 @@ const SignIn = () => {
   const SignInWithGoogleClickHandler = () => {
     SignInWithGoogle()
       .then((result) => {
-        // console.log(result);
         const { user } = result;
         addUserInDatabase(user);
         navigate("/home", { replace: true });
         authCtx.login(user.accessToken);
         authCtx.setId(user.uid);
+        toast.success("Successfully logged in");
       })
       .catch((err) => {
-        console.log(err);
+        toast.err(err.message);
       });
   };
 
   return (
     <div className={styles.main}>
-      <button className={styles.button} onClick={SignInWithGoogleClickHandler}>
-        <FaGoogle />
-        &nbsp;Sign-in
-      </button>
+      <div className={styles.lines}>
+        <div className={styles.line}></div>
+        <div className={styles.line}></div>
+        <div className={styles.line}></div>
+      </div>
+      <div className={styles["login-card"]}>
+        <div className={styles.logo}>
+          <CgNotes />
+          &nbsp;Notes Hub
+        </div>
+        <button
+          className={styles.button}
+          onClick={SignInWithGoogleClickHandler}
+        >
+          <FaGoogle />
+          &nbsp;Sign-in
+        </button>
+      </div>
     </div>
   );
 };
