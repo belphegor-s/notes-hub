@@ -18,6 +18,7 @@ const BurgerMenu = (props) => {
   window.onload = () => {
     const menu = document.getElementsByClassName("bm-menu")[0];
     menu.style.overflow = "hidden";
+    // console.log(menu);
   };
 
   return (

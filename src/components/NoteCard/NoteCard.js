@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./NoteCard.module.css";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { deleteNoteFromDatabase } from "../../firebase/firebaseConfig";
 import EditModal from "../EditModal/EditModal";
+import NotesContext from "../../context/notes-context";
 
 const NoteCard = (props) => {
   //   console.log(props.note);
@@ -10,6 +11,7 @@ const NoteCard = (props) => {
   const uid = localStorage.getItem("id");
 
   const [showModal, setShowModal] = useState(false);
+  const notesCtx = useContext(NotesContext);
 
   const editNoteClickHandler = () => {
     // console.log(props.note.noteID);
@@ -17,6 +19,9 @@ const NoteCard = (props) => {
   };
 
   const deleteNoteClickHandler = () => {
+    notesCtx.setNotes(
+      notesCtx.notes.filter((note) => note.noteID !== props.note.noteID)
+    );
     deleteNoteFromDatabase(uid, props.note.noteID, props.notes);
   };
 

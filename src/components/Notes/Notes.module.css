@@ -7,20 +7,6 @@
   padding-bottom: 27px;
 }
 
-.loading {
-  font-size: 2rem;
-  animation: rotation 1s infinite linear;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media screen and (width< 720px) {
   .main {
     margin: 2rem 1rem;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Home.module.css";
@@ -12,6 +12,8 @@ import Notes from "../../components/Notes/Notes";
 import { IoMdColorPalette } from "react-icons/io";
 import { BiFontColor } from "react-icons//bi";
 import { TwitterPicker } from "react-color";
+import NotesContext from "../../context/notes-context";
+import { BsArrowClockwise } from "react-icons/bs";
 
 const Home = () => {
   const [inputHiddenState, setInputHiddenState] = useState(true);
@@ -21,24 +23,31 @@ const Home = () => {
   const [note, setNote] = useState("");
   const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
   const [displayFontColorPicker, setDisplayFontColorPicker] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [fetchedNotes, setFetchedNotes] = useState([]);
 
   const uid = localStorage.getItem("id");
 
+  const notesCtx = useContext(NotesContext);
+
   const fetchNotes = () => {
+    setIsLoading(true);
     getNotesFromDatabase(uid)
       .then((result) => {
         setFetchedNotes(result.notes);
+        notesCtx.setNotes(result.notes);
+        setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
     fetchNotes();
   }, []);
-
-  // console.log(fetchedNotes);
 
   const saveNoteHandler = () => {
     if (fetchedNotes.length !== 0) {
@@ -74,7 +83,9 @@ const Home = () => {
           setInputHiddenState(true);
           alert("Note Created");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -197,7 +208,13 @@ const Home = () => {
           </div>
         )}
       </div>
-      <Notes />
+      {isLoading && fetchedNotes ? (
+        <div className={styles["loading-wrap"]}>
+          <BsArrowClockwise className={styles.loading} />
+        </div>
+      ) : (
+        <Notes />
+      )}
       <Footer />
     </>
   );

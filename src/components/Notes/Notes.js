@@ -1,45 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getNotesFromDatabase } from "../../firebase/firebaseConfig";
+import React, { useContext, useEffect, useState } from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import styles from "./Notes.module.css";
-import { BsArrowClockwise } from "react-icons/bs";
+import NotesContext from "../../context/notes-context";
 
 const Notes = () => {
-  const uid = localStorage.getItem("id");
-  const [notes, setNotes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const notesCtx = useContext(NotesContext);
+  const notes = notesCtx.notes;
 
-  const fetchNotes = () => {
-    setIsLoading(true);
-    getNotesFromDatabase(uid)
-      .then((result) => {
-        setNotes(result.notes);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  // console.log(notes);
   return (
     <>
       <div className={styles.main}>
-        {isLoading ? (
-          notes.length === 0 ? (
-            <p style={{ color: "#645caa", fontSize: "1.5rem" }}>
-              No notes created
-            </p>
-          ) : (
-            <BsArrowClockwise className={styles.loading} />
-          )
-        ) : (
-          notes.map((note) => (
-            <NoteCard key={note.noteID} note={note} notes={notes} />
-          ))
-        )}
+        {notes.map((note) => (
+          <NoteCard key={note.noteID} note={note} notes={notes} />
+        ))}
       </div>
     </>
   );

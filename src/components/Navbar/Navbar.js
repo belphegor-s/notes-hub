@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { BsArrowClockwise } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import NotesContext from "../../context/notes-context";
 
 const Navbar = () => {
   const authCtx = useContext(AuthContext);
+  const notesCtx = useContext(NotesContext);
   const uid = localStorage.getItem("id");
   const navigate = useNavigate();
 
@@ -29,6 +31,7 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     authCtx.logout();
+    notesCtx.emptyNotes();
     navigate("/", { replace: true });
   };
 
