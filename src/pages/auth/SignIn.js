@@ -8,7 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 import { CgNotes } from "react-icons/cg";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 const SignIn = () => {
   const authCtx = useContext(AuthContext);
@@ -49,6 +49,7 @@ const SignIn = () => {
           &nbsp;Sign-in
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };
