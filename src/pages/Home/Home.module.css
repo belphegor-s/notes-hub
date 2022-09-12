@@ -107,13 +107,13 @@
   right: 0;
 }
 
-::placeholder {
+/* ::placeholder {
   text-shadow: 0 0 1px #ccc;
 }
 
 ::-ms-input-placeholder {
   text-shadow: 0 0 1px #ccc;
-}
+} */
 
 .loading-wrap {
   display: flex;
