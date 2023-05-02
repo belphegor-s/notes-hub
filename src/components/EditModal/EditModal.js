@@ -11,168 +11,174 @@ import NotesContext from "../../context/notes-context";
 import { toast } from "react-hot-toast";
 
 const EditModal = (props) => {
-  const [bgColor, setBgColor] = useState("");
-  const [fontColor, setFontColor] = useState("");
-  const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
-  const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
-  const [displayFontColorPicker, setDisplayFontColorPicker] = useState(false);
+	const [bgColor, setBgColor] = useState("");
+	const [fontColor, setFontColor] = useState("");
+	const [title, setTitle] = useState("");
+	const [note, setNote] = useState("");
+	const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
+	const [displayFontColorPicker, setDisplayFontColorPicker] = useState(false);
 
-  const uid = localStorage.getItem("id");
-  const notesCtx = useContext(NotesContext);
-  const [fetchedNotes, setFetchedNotes] = useState("");
+	const uid = localStorage.getItem("id");
+	const notesCtx = useContext(NotesContext);
+	const [fetchedNotes, setFetchedNotes] = useState("");
 
-  const fetchNotes = useCallback(() => {
-    getNotesFromDatabase(uid)
-      .then((result) => {
-        notesCtx.setNotes(result.notes);
-        setFetchedNotes(result.notes);
-        // console.log(notesCtx.notes);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  });
+	const fetchNotes = useCallback(() => {
+		getNotesFromDatabase(uid)
+			.then((result) => {
+				notesCtx.setNotes(result.notes);
+				setFetchedNotes(result.notes);
+				// console.log(notesCtx.notes);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	});
 
-  useEffect(() => {
-    fetchNotes();
-  }, [fetchedNotes]);
+	useEffect(() => {
+		fetchNotes();
 
-  const saveNoteHandler = () => {
-    const filteredNotes = props.notes.filter(
-      (note) => note.noteID !== props.noteID
-    );
+		const clickedNote = props.notes.filter(
+			(note) => note.noteID === props.noteID
+		);
 
-    const updatedData = {
-      notes: [
-        ...filteredNotes,
-        {
-          noteID: props.noteID,
-          title: title,
-          note: note,
-          bgColor: bgColor,
-          fontColor: fontColor,
-        },
-      ],
-    };
+		console.log(props.notes);
+	}, [fetchedNotes]);
 
-    updateSpecificNoteInDatabase(uid, updatedData)
-      .then((result) => {
-        toast.success("Note Updated");
-      })
-      .catch((err) => toast.error(err.message));
-  };
+	const saveNoteHandler = () => {
+		const filteredNotes = props.notes.filter(
+			(note) => note.noteID !== props.noteID
+		);
 
-  return (
-    <div className={styles["edit-modal"]}>
-      <div
-        className={styles["modal-content"]}
-        style={{
-          backgroundColor: bgColor,
-          color: fontColor,
-        }}
-      >
-        <input
-          className={styles["input-expanded"]}
-          type="text"
-          placeholder="Title"
-          style={{ color: fontColor }}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <br />
-        <textarea
-          className={styles["input-expanded"]}
-          placeholder="Take a note..."
-          style={{ color: fontColor }}
-          onChange={(e) => setNote(e.target.value)}
-        />
-        <div className={styles["bottom-options"]}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div className={styles["picker"]}>
-              <abbr title="Set Background Color">
-                <IoMdColorPalette
-                  className={styles.icons}
-                  onClick={() => {
-                    setDisplayBgColorPicker(true);
-                  }}
-                />
-              </abbr>
-              {displayBgColorPicker ? (
-                <div className={styles.popover}>
-                  <div
-                    className={styles.cover}
-                    onClick={() => {
-                      setDisplayBgColorPicker(false);
-                    }}
-                  />
-                  <div className={styles.popover}>
-                    <TwitterPicker
-                      triangle="hide"
-                      onChangeComplete={(color) => {
-                        setBgColor(color.hex);
-                      }}
-                    />
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            <div className={styles["picker"]}>
-              <abbr title="Set Font Color">
-                <BiFontColor
-                  className={styles.icons}
-                  onClick={() => {
-                    setDisplayFontColorPicker(true);
-                  }}
-                />
-              </abbr>
-              {displayFontColorPicker ? (
-                <div className={styles.popover}>
-                  <div
-                    className={styles.cover}
-                    onClick={() => {
-                      setDisplayFontColorPicker(false);
-                    }}
-                  />
-                  <div className={styles.popover}>
-                    <TwitterPicker
-                      triangle="hide"
-                      onChangeComplete={(color) => {
-                        setFontColor(color.hex);
-                      }}
-                    />
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-          <div>
-            <button
-              onClick={saveNoteHandler}
-              className={styles["button"]}
-              style={{ marginRight: "1rem" }}
-            >
-              Save
-            </button>
-            <button
-              onClick={() => {
-                setBgColor("");
-                setFontColor("");
-                props.onClose();
-              }}
-              className={styles["button"]}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+		const updatedData = {
+			notes: [
+				...filteredNotes,
+				{
+					noteID: props.noteID,
+					title: title,
+					note: note,
+					bgColor: bgColor,
+					fontColor: fontColor,
+				},
+			],
+		};
+
+		updateSpecificNoteInDatabase(uid, updatedData)
+			.then((result) => {
+				toast.success("Note Updated");
+			})
+			.catch((err) => toast.error(err.message));
+	};
+
+	return (
+		<div className={styles["edit-modal"]}>
+			<div
+				className={styles["modal-content"]}
+				style={{
+					backgroundColor: bgColor,
+					color: fontColor,
+				}}
+			>
+				<input
+					className={styles["input-expanded"]}
+					type="text"
+					placeholder="Title"
+					style={{ color: fontColor }}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				<br />
+				<textarea
+					className={styles["input-expanded"]}
+					placeholder="Take a note..."
+					style={{ color: fontColor }}
+					onChange={(e) => setNote(e.target.value)}
+				/>
+				<div className={styles["bottom-options"]}>
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+						}}
+					>
+						<div className={styles["picker"]}>
+							<abbr title="Set Background Color">
+								<IoMdColorPalette
+									className={styles.icons}
+									onClick={() => {
+										setDisplayBgColorPicker(true);
+									}}
+								/>
+							</abbr>
+							{displayBgColorPicker ? (
+								<div className={styles.popover}>
+									<div
+										className={styles.cover}
+										onClick={() => {
+											setDisplayBgColorPicker(false);
+										}}
+									/>
+									<div className={styles.popover}>
+										<TwitterPicker
+											triangle="hide"
+											onChangeComplete={(color) => {
+												setBgColor(color.hex);
+											}}
+										/>
+									</div>
+								</div>
+							) : null}
+						</div>
+						<div className={styles["picker"]}>
+							<abbr title="Set Font Color">
+								<BiFontColor
+									className={styles.icons}
+									onClick={() => {
+										setDisplayFontColorPicker(true);
+									}}
+								/>
+							</abbr>
+							{displayFontColorPicker ? (
+								<div className={styles.popover}>
+									<div
+										className={styles.cover}
+										onClick={() => {
+											setDisplayFontColorPicker(false);
+										}}
+									/>
+									<div className={styles.popover}>
+										<TwitterPicker
+											triangle="hide"
+											onChangeComplete={(color) => {
+												setFontColor(color.hex);
+											}}
+										/>
+									</div>
+								</div>
+							) : null}
+						</div>
+					</div>
+					<div>
+						<button
+							onClick={saveNoteHandler}
+							className={styles["button"]}
+							style={{ marginRight: "1rem" }}
+						>
+							Save
+						</button>
+						<button
+							onClick={() => {
+								setBgColor("");
+								setFontColor("");
+								props.onClose();
+							}}
+							className={styles["button"]}
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default EditModal;

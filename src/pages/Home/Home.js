@@ -216,7 +216,7 @@ const Home = () => {
       ) : (
         <Notes />
       )}
-      <Footer />
+      {/* <Footer /> */}
       <Toaster />
     </>
   );
