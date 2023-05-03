@@ -1,5 +1,5 @@
 .note-card {
-  width: 25%;
+  width: 280px;
   height: max-content;
   display: flex;
   flex-direction: column;
@@ -8,9 +8,10 @@
   border: 2px solid #645caa;
   border-radius: 10px;
   padding: 1rem;
-  margin: 1rem;
+  margin-bottom: 2em;
   box-shadow: 0 0 10px #ccc;
   cursor: default;
+  break-inside: avoid;
 }
 
 .note-card:hover {
@@ -56,20 +57,8 @@
   color: #a084ca;
 }
 
-@media screen and (width< 900px) {
-  .note-card {
-    width: 30%;
-  }
-}
-
-@media screen and (width< 720px) {
-  .note-card {
-    width: 35%;
-  }
-}
-
-@media screen and (width< 540px) {
-  .note-card {
-    width: 80%;
+@media (max-width: 576px) {
+  .note {
+    width: 100%;
   }
 }

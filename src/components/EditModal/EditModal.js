@@ -27,12 +27,11 @@ const EditModal = (props) => {
 			.then((result) => {
 				notesCtx.setNotes(result.notes);
 				setFetchedNotes(result.notes);
-				// console.log(notesCtx.notes);
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
-	});
+	},[]);
 
 	useEffect(() => {
 		fetchNotes();
@@ -41,10 +40,16 @@ const EditModal = (props) => {
 			(note) => note.noteID === props.noteID
 		);
 
-		console.log(props.notes);
-	}, [fetchedNotes]);
+		setTitle(clickedNote[0]?.title)
+		setNote(clickedNote[0]?.note)
+		setBgColor(clickedNote[0]?.bgColor)
+		setFontColor(clickedNote[0]?.fontColor)
+
+	}, []);
 
 	const saveNoteHandler = () => {
+		props.onClose();
+
 		const filteredNotes = props.notes.filter(
 			(note) => note.noteID !== props.noteID
 		);
@@ -65,6 +70,7 @@ const EditModal = (props) => {
 		updateSpecificNoteInDatabase(uid, updatedData)
 			.then((result) => {
 				toast.success("Note Updated");
+				fetchNotes()
 			})
 			.catch((err) => toast.error(err.message));
 	};
@@ -82,6 +88,7 @@ const EditModal = (props) => {
 					className={styles["input-expanded"]}
 					type="text"
 					placeholder="Title"
+					value={title}
 					style={{ color: fontColor }}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
@@ -90,6 +97,7 @@ const EditModal = (props) => {
 					className={styles["input-expanded"]}
 					placeholder="Take a note..."
 					style={{ color: fontColor }}
+					value={note}
 					onChange={(e) => setNote(e.target.value)}
 				/>
 				<div className={styles["bottom-options"]}>

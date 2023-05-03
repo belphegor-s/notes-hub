@@ -44,7 +44,7 @@ const Home = () => {
         toast.error(err.message);
         setIsLoading(false);
       });
-  });
+  },[]);
 
   useEffect(() => {
     fetchNotes();
